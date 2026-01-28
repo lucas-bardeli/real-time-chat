@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Chat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <span>Real-time Chat</span>
+    <span id="status">Conectando...</span>
+  </header>
+
+  <main>
+    <div id="messages"></div>
+  </main>
+
+  <form id="chat-form">
+    <button id="ping-btn">Ping</button>
+    <input id="chat-input" type="text" placeholder="Digite a sua mensagem...">
+  </form>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
