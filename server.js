@@ -13,12 +13,12 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   // Envia mensagem quando alguém se conecta
-  socket.emit('server:welcome', { msg: "pulou para o servidor.", id: socket.id});
+  io.emit('server:welcome', { msg: "pulou para o servidor.", id: socket.id});
   console.log(`Socket connected: ${socket.id}`);
   
   // Recebe mensagems do cliente
   socket.on('client:ping', (data) => {
-    socket.emit('server:pong', { received: data, at: new Date().toISOString() })
+    socket.emit('server:pong', { received: data, at: Date.now() })
   });
   
   // Broadcast para todos
@@ -27,12 +27,12 @@ io.on('connection', (socket) => {
   });
   
   socket.on('disconnect', (reason) => {
-    socket.emit('server:bye', { id: socket.id, msg: "saiu.", reason: reason});
+    io.emit('server:bye', { id: socket.id, msg: "saiu.", reason: reason});
     console.log(`Socket disconnected: ${socket.id}`);
   });
 });
 
-const PORT = 3000;
+const PORT = 3000; // http://localhost:3000/
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
