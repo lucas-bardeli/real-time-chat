@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Real-Time Chat</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,14 +17,25 @@
     <span id="status">Conectando...</span>
   </header>
 
-  <main>
-    <div id="messages"></div>
-  </main>
+  <section class="container">
+    <section id="login">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input id="login-input" type="text" placeholder="Digite o nome a ser exibido...">
+        <button id="login-btn" type="submit">Entrar</button>
+      </form>
+    </section>
 
-  <form id="chat-form">
-    <button id="ping-btn" type="button">Ping</button>
-    <input id="chat-input" type="text" placeholder="Digite a sua mensagem...">
-  </form>
+    <section id="chat">
+      <div id="messages"></div>
+      
+      <form id="chat-form">
+        <button id="ping-btn" type="button">Ping</button>
+        <input id="chat-input" type="text" placeholder="Digite a sua mensagem..." required>
+        <button id="ping-btn" type="submit">Enviar</button>
+      </form>
+    </section>
+  </section>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="app.js"></script>

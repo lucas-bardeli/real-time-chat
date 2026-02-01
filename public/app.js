@@ -9,14 +9,20 @@ const pingBtn = $('ping-btn');
 
 const addMessage = (msg, isMe = false, date = new Date().toLocaleTimeString()) => {
   const div = document.createElement('div');
-  const span = document.createElement('span');
-
   div.classList.add('message', isMe ? 'me' : 'other');
-  div.textContent = msg;
+
+  const divMsg = document.createElement('div');
+  divMsg.classList.add('text');
+  divMsg.textContent = msg;
+
+  const span = document.createElement('span');
+  span.classList.add('date');
   span.textContent = date;
 
+  div.appendChild(divMsg);
+  div.appendChild(span);
+
   messages.appendChild(div);
-  messages.appendChild(span);
   messages.scrollTop = messages.scrollHeight;
 };
 
