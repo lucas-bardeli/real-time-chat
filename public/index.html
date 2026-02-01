@@ -12,27 +12,27 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <span>Real-Time Chat</span>
-    <span id="status">Conectando...</span>
-  </header>
-
   <section class="container">
     <section id="login">
       <h2>Login</h2>
       <form id="login-form">
         <input id="login-input" type="text" placeholder="Digite o nome a ser exibido...">
-        <button id="login-btn" type="submit">Entrar</button>
+        <button id="login-btn" class="btn" type="submit">Entrar</button>
       </form>
     </section>
 
     <section id="chat">
+      <section>
+        <span>Real-Time Chat</span>
+        <span id="status">Conectando...</span>
+      </section>
+
       <div id="messages"></div>
-      
+
       <form id="chat-form">
-        <button id="ping-btn" type="button">Ping</button>
+        <button id="ping-btn" class="btn" type="button">Ping</button>
         <input id="chat-input" type="text" placeholder="Digite a sua mensagem..." required>
-        <button id="ping-btn" type="submit">Enviar</button>
+        <button id="chat-btn" class="btn" type="submit">Enviar</button>
       </form>
     </section>
   </section>

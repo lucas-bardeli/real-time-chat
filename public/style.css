@@ -23,6 +23,23 @@ body {
   justify-content: center;
 }
 
+/* BUTTON */
+.btn {
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-color: #E4E4E7;
+  cursor: pointer;
+  color: #09090B;
+  transition: all 300ms ease;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
 /* LOGIN */
 #login {
   width: 100%;
@@ -30,7 +47,6 @@ body {
   background-color: #27272A;
   border-radius: 5px;
   padding: 30px 20px;
-  display: none;
 }
 
 #login > h2 {
@@ -61,18 +77,75 @@ body {
   outline: 2px solid #f2f2f2;
 }
 
-#login-btn {
+/* CHAT */
+#chat {
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#chat-form {
+  width: 100%;
+  background-color: #18181B;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+#chat-input {
   border: none;
   border-radius: 5px;
   padding: 15px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background-color: #E4E4E7;
-  cursor: pointer;
-  color: #09090B;
-  transition: all 300ms ease; 
+  flex-grow: 1;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #27272A;
+  color: #f2f2f2;
+  outline: none;
 }
 
-#login-btn:hover {
-  opacity: 0.8;
+/* MESSAGES */
+#messages {
+  flex-grow: 1;
+  padding: 25px 25px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.message {
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  line-height: 20px;
+}
+
+.me {
+  border-radius: 10px 10px 0 10px;
+  background-color: #E4E4E7;
+  color: #09090B;
+  align-self: flex-end;
+}
+
+.other {
+  border-radius: 0 10px 10px 10px;
+  background-color: #27272A;
+  color: #f2f2f2;
+  align-self: flex-start;
+}
+
+.username {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: cadetblue;
 }
