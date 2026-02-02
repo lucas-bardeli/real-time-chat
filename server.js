@@ -11,24 +11,33 @@ const io = new Server(server, {
   cors: { origin: "*" }
 });
 
+const users = new Map();
+
 io.on('connection', (socket) => {
-  // Envia mensagem quando alguém se conecta
-  io.emit('server:welcome', { msg: "pulou para o servidor.", id: socket.id});
-  console.log(`Socket connected: ${socket.id}`);
+  socket.on('user:login', (data) => {
+    users.set(socket.id, { id: socket.id, username: data.username, color: data.color });
+
+    // Envia mensagem quando alguém se conecta
+    io.emit('server:welcome', { username: data.username });
+  });
   
   // Recebe mensagems do cliente
-  socket.on('client:ping', (data) => {
-    socket.emit('server:pong', { received: data, at: Date.now() })
+  socket.on('client:ping', () => {
+    socket.emit('server:pong');
   });
   
   // Broadcast para todos
   socket.on('chat:msg', (msg) => {
-    io.emit('chat:msg', { from: socket.id, msg, at: Date.now() });
+    const user = users.get(socket.id);
+    if (!user) return;
+    io.emit('chat:msg', { from: { id: socket.id, username: user.username, color: user.color }, msg, at: Date.now() });
   });
   
   socket.on('disconnect', (reason) => {
-    io.emit('server:bye', { id: socket.id, msg: "saiu.", reason: reason});
-    console.log(`Socket disconnected: ${socket.id}`);
+    const user = users.get(socket.id);
+    if (!user) return;
+    io.emit('server:bye', { username: user.username, reason: reason });
+    users.delete(socket.id);
   });
 });
 

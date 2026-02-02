@@ -37,7 +37,7 @@ body {
 }
 
 .btn:hover {
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 /* LOGIN */
@@ -143,9 +143,27 @@ body {
   align-self: flex-start;
 }
 
+.server {
+  border-radius: 10px;
+  background-color: #27272A;
+  align-self: center;
+}
+
+/* SPANS */
+.server-label {
+  color: orangered;
+  margin-right: 5px;
+}
+
 .username {
   display: block;
   margin-bottom: 10px;
   font-weight: 700;
   color: cadetblue;
+}
+
+.time {
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: #f2f2f2;
 }
