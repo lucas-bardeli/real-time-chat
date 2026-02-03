@@ -19,11 +19,11 @@ Um **chat em tempo real** construído com **Node.js**, **Express**, **Socket.io*
 ### Instalar dependências e rodar o servidor
 ```bash
 npm install
-npm run serve
+npm run start
 ```
 
 O servidor será iniciado em:
 ```
-http://localhost:3000
+http://localhost:3000/
 ```
-O modo `--watch` no script reinicia automaticamente o servidor quando arquivos são alterados.
+O modo `--watch` no script `npm run dev` reinicia automaticamente o servidor quando arquivos são alterados.
