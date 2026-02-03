@@ -121,12 +121,13 @@ body {
 
 .message {
   padding: 10px;
-  width: 100%;
-  max-width: 250px;
+  max-width: 300px;
   font-size: 0.9rem;
   font-weight: 500;
   margin-bottom: 15px;
   line-height: 20px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .me {
@@ -151,19 +152,18 @@ body {
 
 /* SPANS */
 .server-label {
-  color: orangered;
+  color: yellow;
   margin-right: 5px;
 }
 
-.username {
-  display: block;
+.label {
+  display: flex;
+  gap: 5px;
   margin-bottom: 10px;
   font-weight: 700;
-  color: cadetblue;
 }
 
 .time {
   font-weight: 500;
   font-size: 0.75rem;
-  color: #f2f2f2;
 }

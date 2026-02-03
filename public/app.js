@@ -15,38 +15,30 @@ const user = { id: null, name: "", color: "" };
 
 const colors = ["cadetblue", "darkgoldenrod", "cornflowerblue", "darkkhaki", "hotpink", "gold"];
 
-const addMeMessage = (content, date = new Date().toLocaleTimeString()) => {
-  const div = document.createElement('div');
-  div.classList.add('message', 'me');
-  div.textContent = content;
+const addMessage = (isMe, content, username, color, date = new Date().toLocaleTimeString()) => {
+  const divMessage = document.createElement('div');
+  divMessage.classList.add('message', isMe ? 'me' : 'other');
+  
+  const divLabel = document.createElement('div');
+  divLabel.classList.add('label');
 
-  const span = document.createElement('span');
-  span.classList.add('time');
-  span.textContent = date;
+  const spanName = document.createElement('span');
+  spanName.style.color = isMe ? 'darkblue' : color;
+  spanName.textContent = username;
 
-  div.appendChild(span);
-  messages.appendChild(div);
-};
+  const spanTime = document.createElement('span');
+  spanTime.classList.add('time');
+  spanTime.textContent = `(${date})`;
+  
+  divLabel.append(spanName, spanTime);
 
-const addOtherMessage = (username, content, color, date = new Date().toLocaleTimeString()) => {
-  const div = document.createElement('div');
-  div.classList.add('message', 'other');
-
-  const name = document.createElement('span');
-  name.classList.add('username');
-  name.style.color = color;
-  name.textContent = username;
-
-  const time = document.createElement('span');
-  time.classList.add('time');
-  time.textContent = date;
-  name.appendChild(time);
-
-  const msg = document.createElement('span');
+  const msg = document.createElement('p');
   msg.textContent = content;
 
-  div.append(name, msg, time);
-  messages.appendChild(div);
+  divMessage.append(divLabel, msg);
+  messages.appendChild(divMessage);
+  
+  scrollScreen();
 };
 
 const addServerMessage = (content) => {
@@ -62,15 +54,17 @@ const addServerMessage = (content) => {
 
   div.append(label, msg);
   messages.appendChild(div);
+
+  scrollScreen();
 };
 
 socket.on('connect', () => {
   user.id = socket.id;
-  statusEl.textContent =  `Conectado como (${socket.id})`;
+  statusEl.textContent = `Conectado como (${socket.id})`;
 });
 
 socket.on('disconnect', (reason) => {
-  statusEl.textContent =  `Desconectado (${reason}).`;
+  statusEl.textContent = `Desconectado (${reason}).`;
 });
 
 socket.on('server:welcome', (data) => addServerMessage(`${data.username} entrou no chat.`));
@@ -78,9 +72,7 @@ socket.on('server:bye', (data) => addServerMessage(`${data.username} saiu.`));
 socket.on('server:pong', () => addServerMessage('Respondeu com pong!'));
 
 socket.on('chat:msg', ({ from: { id, username, color }, msg, at }) => {
-  id === socket.id
-    ? addMeMessage(msg, new Date(at).toLocaleTimeString())
-    : addOtherMessage(username, msg, color, new Date(at).toLocaleTimeString());
+  addMessage(id === socket.id, msg, username, color, new Date(at).toLocaleTimeString());
 });
 
 const getRandomColor = () => {
@@ -98,7 +90,7 @@ loginForm.addEventListener('submit', (e) => {
   user.name = name;
   user.color = getRandomColor();
 
-  socket.emit('user:login', { name: user.name, color: user.color });
+  socket.emit('user:login', { username: user.name, color: user.color });
 
   login.style.display = "none";
   chat.style.display = "flex";
@@ -119,3 +111,10 @@ chatForm.addEventListener('submit', (e) => {
 pingBtn.addEventListener('click', () => {
   socket.emit('client:ping', { at: Date.now() });
 });
+
+const scrollScreen = () => {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
+};
