@@ -110,6 +110,30 @@ body {
   outline: none;
 }
 
+.status {
+  padding: 10px 15px;
+  margin: 15px 25px;
+  max-width: 350px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: fixed;
+  align-self: flex-end;
+  border-radius: 10px;
+  background-color: #27272A;
+}
+
+#status-color {
+  padding: 7px;
+  border: 2px solid #E4E4E7;
+  border-radius: 100%;
+}
+
+#status-el {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* MESSAGES */
 #messages {
   flex-grow: 1;
@@ -159,6 +183,7 @@ body {
 .label {
   display: flex;
   gap: 5px;
+  align-items: center;
   margin-bottom: 10px;
   font-weight: 700;
 }

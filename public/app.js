@@ -1,7 +1,8 @@
 const $ = (id) => document.getElementById(id);
 const socket = io();
 
-const statusEl = $('status');
+const statusEl = $('status-el');
+const statusColor = $('status-color');
 const messages = $('messages');
 const chat = $('chat');
 const chatForm = $('chat-form');
@@ -13,7 +14,7 @@ const loginInput = $('login-input');
 
 const user = { id: null, name: "", color: "" };
 
-const colors = ["cadetblue", "darkgoldenrod", "cornflowerblue", "darkkhaki", "hotpink", "gold"];
+const colors = ["cadetblue", "darkgoldenrod", "cornflowerblue", "darkkhaki", "hotpink", "darkorange", "forestgreen", "royalblue", "tomato", "aqua", "olive"];
 
 const addMessage = (isMe, content, username, color, date = new Date().toLocaleTimeString()) => {
   const divMessage = document.createElement('div');
@@ -60,11 +61,13 @@ const addServerMessage = (content) => {
 
 socket.on('connect', () => {
   user.id = socket.id;
-  statusEl.textContent = `Conectado como (${socket.id})`;
+  statusEl.textContent = `Conectado: ${socket.id}`;
+  statusColor.style.backgroundColor = 'green';
 });
 
 socket.on('disconnect', (reason) => {
-  statusEl.textContent = `Desconectado (${reason}).`;
+  statusEl.textContent = `Desconectado: ${reason}.`;
+  statusColor.style.backgroundColor = 'red';
 });
 
 socket.on('server:welcome', (data) => addServerMessage(`${data.username} entrou no chat.`));
