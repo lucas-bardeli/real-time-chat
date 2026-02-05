@@ -17,31 +17,29 @@ io.on('connection', (socket) => {
   socket.on('user:login', (data) => {
     users.set(socket.id, { id: socket.id, username: data.username, color: data.color });
 
-    // Envia mensagem quando alguém se conecta
-    io.emit('server:welcome', { username: data.username });
+    const user = users.get(socket.id);
+    if (!user) return;
+
+    io.emit('server:welcome', { username: user.username });
   });
   
-  // Recebe mensagems do cliente
-  socket.on('client:ping', () => {
-    socket.emit('server:pong');
-  });
-  
-  // Broadcast para todos
+  socket.on('client:ping', () => socket.emit('server:pong', { at: Date.now() }));
+
   socket.on('chat:msg', (msg) => {
     const user = users.get(socket.id);
     if (!user) return;
+
     io.emit('chat:msg', { from: { id: socket.id, username: user.username, color: user.color }, msg, at: Date.now() });
   });
   
   socket.on('disconnect', (reason) => {
     const user = users.get(socket.id);
     if (!user) return;
+
     io.emit('server:bye', { username: user.username, reason: reason });
     users.delete(socket.id);
   });
 });
 
 const PORT = 3000; // http://localhost:3000/
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+server.listen(PORT, () => console.log(`Server running on port ${PORT}.`));

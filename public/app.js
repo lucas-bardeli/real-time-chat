@@ -16,7 +16,7 @@ const user = { id: null, name: "", color: "" };
 
 const colors = ["cadetblue", "darkgoldenrod", "cornflowerblue", "darkkhaki", "hotpink", "darkorange", "forestgreen", "royalblue", "tomato", "aqua", "olive"];
 
-const addMessage = (isMe, content, username, color, date = new Date().toLocaleTimeString()) => {
+const addMessage = (isMe, content, username, color, date) => {
   const divMessage = document.createElement('div');
   divMessage.classList.add('message', isMe ? 'me' : 'other');
   
@@ -75,7 +75,7 @@ socket.on('server:bye', (data) => addServerMessage(`${data.username} saiu.`));
 socket.on('server:pong', () => addServerMessage('Respondeu com pong!'));
 
 socket.on('chat:msg', ({ from: { id, username, color }, msg, at }) => {
-  addMessage(id === socket.id, msg, username, color, new Date(at).toLocaleTimeString());
+  addMessage(id === socket.id, msg, username, color, new Date(at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
 });
 
 const getRandomColor = () => {
@@ -83,7 +83,6 @@ const getRandomColor = () => {
   return colors[randomIndex];
 };
 
-// Login
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -99,7 +98,6 @@ loginForm.addEventListener('submit', (e) => {
   chat.style.display = "flex";
 });
 
-// Envio de mensagens
 chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -110,10 +108,7 @@ chatForm.addEventListener('submit', (e) => {
   chatInput.value = '';
 });
 
-// Botão Ping
-pingBtn.addEventListener('click', () => {
-  socket.emit('client:ping', { at: Date.now() });
-});
+pingBtn.addEventListener('click', () => socket.emit('client:ping', { at: Date.now() }));
 
 const scrollScreen = () => {
   window.scrollTo({
